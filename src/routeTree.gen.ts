@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CertificationsRouteImport } from './routes/certifications'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SkillsRoute = SkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/projects': typeof ProjectsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/projects': typeof ProjectsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/projects': typeof ProjectsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +89,17 @@ export interface FileRouteTypes {
     | '/certifications'
     | '/contact'
     | '/projects'
+    | '/sitemap.xml'
     | '/skills'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/certifications' | '/contact' | '/projects' | '/skills'
+  to:
+    | '/'
+    | '/about'
+    | '/certifications'
+    | '/contact'
+    | '/projects'
+    | '/sitemap.xml'
+    | '/skills'
   id:
     | '__root__'
     | '/'
@@ -90,6 +107,7 @@ export interface FileRouteTypes {
     | '/certifications'
     | '/contact'
     | '/projects'
+    | '/sitemap.xml'
     | '/skills'
   fileRoutesById: FileRoutesById
 }
@@ -99,6 +117,7 @@ export interface RootRouteChildren {
   CertificationsRoute: typeof CertificationsRoute
   ContactRoute: typeof ContactRoute
   ProjectsRoute: typeof ProjectsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillsRoute: typeof SkillsRoute
 }
 
@@ -109,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/skills'
       fullPath: '/skills'
       preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -155,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   CertificationsRoute: CertificationsRoute,
   ContactRoute: ContactRoute,
   ProjectsRoute: ProjectsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillsRoute: SkillsRoute,
 }
 export const routeTree = rootRouteImport
