@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'nodejs'
+    }
+
     stages {
 
         stage('Clone') {
@@ -9,21 +13,21 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
         stage('Build') {
             steps {
-                echo 'Build started'
+                sh 'npm run build'
             }
         }
 
-        stage('Test') {
+        stage('Start App') {
             steps {
-                echo 'Testing done'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deployment completed'
+                sh 'nohup npm start > app.log 2>&1 &'
             }
         }
     }
